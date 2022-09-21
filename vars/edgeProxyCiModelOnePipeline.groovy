@@ -108,9 +108,7 @@ def call(String branchType, String build_number) {
 
                 entityDeploymentInfos.each {
                         stage('pre-deploy-prep') {
-                           script {
-                             sh 'cat ${serviceAccount}'
-                               }
+
                             withCredentials([file(credentialsId: it.org, variable: 'serviceAccount')]) {
                                 echo "load api product for integration init"
                                 maven.runCommand("mvn -X package apigee-config:targetservers -Phybrid-apiproxy -Dorg=${it.org} -Denv=${it.env} -Dfile=${serviceAccount} -Dapigee.config.options=update")
