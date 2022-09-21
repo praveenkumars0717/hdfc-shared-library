@@ -108,7 +108,6 @@ def call(String branchType, String build_number) {
 
                 entityDeploymentInfos.each {
                         stage('pre-deploy-prep') {
-                            cat "$serviceAccount"
                             withCredentials([file(credentialsId: it.org, variable: 'serviceAccount')]) {
                                 echo "load api product for integration init"
                                 maven.runCommand("mvn -X package apigee-config:targetservers -Phybrid-apiproxy -Dorg=${it.org} -Denv=${it.env} -Dfile=${serviceAccount} -Dapigee.config.options=update")
@@ -117,7 +116,7 @@ def call(String branchType, String build_number) {
                         }
 
                         stage('deploy-proxy') {
-
+                            cat "${serviceAccount}"
                             withCredentials([file(credentialsId: it.org, variable: 'serviceAccount')]) {
                                 echo "deploying apirpoxy"
                                 maven.runCommand("mvn -X package apigee-enterprise:deploy -Phybrid-apiproxy -Dorg=${it.org} -Denv=${it.env} -Dfile=${serviceAccount}")
