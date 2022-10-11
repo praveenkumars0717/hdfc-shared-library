@@ -66,18 +66,18 @@ def call(String operation, String repoProjectName) {
                         }
                         stage('release-create') {
                             when { 
-								expression { 
-									return params.operation == 'release-create' 
-									} 
-								}
-							steps {
-								configFileProvider([configFile(fileId: 'cicd_jfrog_final', variable: 'MAVEN_SETTINGS_XML')]) {
-								script {                    
-								sh '''
-								mvn -s $MAVEN_SETTINGS_XML  jgitflow:release-start -X
+				expression { 
+					params.operation == 'release-create' 
+					} 
+				}
+				steps {
+				configFileProvider([configFile(fileId: 'cicd_jfrog_final', variable: 'MAVEN_SETTINGS_XML')]) {
+				script {                    
+				sh '''
+				mvn -s $MAVEN_SETTINGS_XML  jgitflow:release-start -X
 								'''
-								}
-							}
+					}
+				}
                             }
                         }
 						
