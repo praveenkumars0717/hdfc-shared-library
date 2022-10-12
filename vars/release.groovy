@@ -75,7 +75,7 @@ def call(String operation, String repoProjectName) {
 				script {                    
 				sh '''
 				mvn -s $MAVEN_SETTINGS_XML  jgitflow:release-start -X
-								'''
+				'''
 					}
 				}
                             }
